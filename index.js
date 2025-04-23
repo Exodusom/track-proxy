@@ -1,3 +1,4 @@
+// ✅ FINAL FIXED VERSION OF YOUR PROXY SERVER
 const express = require('express');
 const cors = require('cors');
 const bodyParser = require('body-parser');
@@ -13,15 +14,19 @@ app.use(bodyParser.json());
 
 app.post('/track', async (req, res) => {
   try {
-    const { number } = req.body;
+    const trackingNum = req.body.number;
+
+    // Log the outgoing payload for debug
     const payload = {
       data: [
         {
-          number: number,
+          number: trackingNum,
           auto_detect: true
         }
       ]
     };
+
+    console.log('Sending to 17TRACK:', JSON.stringify(payload, null, 2));
 
     const response = await fetch('https://api.17track.net/track/v2/register', {
       method: 'POST',
@@ -41,5 +46,5 @@ app.post('/track', async (req, res) => {
 });
 
 app.listen(PORT, () => {
-  console.log(`Proxy server running on port ${PORT}`);
+  console.log(`✅ Proxy server running on port ${PORT}`);
 });
